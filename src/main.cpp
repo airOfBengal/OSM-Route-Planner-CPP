@@ -59,16 +59,16 @@ int main(int argc, const char **argv)
     float start_x, start_y , end_x, end_y;
     std::cout << "Enter start x between 0 and 100: ";
     std::cin >> start_x;
-    std::cout << start_x << std::endl;
+    //std::cout << start_x << std::endl;
     std::cout << "Enter start y between 0 and 100: ";
     std::cin >> start_y;
-    std::cout << start_y << std::endl;
+    //std::cout << start_y << std::endl;
     std::cout << "Enter end x between 0 and 100: ";
     std::cin >> end_x;
-    std::cout << end_x << std::endl;
+    //std::cout << end_x << std::endl;
     std::cout << "Enter end y between 0 and 100: ";
     std::cin >> end_y;
-    std::cout << end_y << std::endl;
+    //std::cout << end_y << std::endl;
 
     // Build Model.
     RouteModel model{osm_data};

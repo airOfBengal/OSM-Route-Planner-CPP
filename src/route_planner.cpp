@@ -35,17 +35,19 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
     current_node->FindNeighbors();
     for (RouteModel::Node* node : current_node->neighbors){
-        node->parent = current_node;
-        node->h_value = CalculateHValue(node);
-        node->g_value = current_node->g_value + node->distance(*current_node);
-        node->visited = true;
-        open_list.push_back(node);
-    }       
+            if(!node->visited){
+                node->parent = current_node;
+                node->h_value = CalculateHValue(node);
+                node->g_value = current_node->g_value + node->distance(*current_node);
+                node->visited = true;
+                open_list.push_back(node);
+            }
+        }     
 }
 
 bool Compare(RouteModel::Node* node1, RouteModel::Node* node2){
     float f1 = node1->g_value + node1->h_value;
-    float f2 = node2->g_value = node2->h_value;
+    float f2 = node2->g_value + node2->h_value;
     return f1 > f2;
 }
 
@@ -104,12 +106,15 @@ void RoutePlanner::AStarSearch() {
 
     // TODO: Implement your solution here.
     current_node = start_node;
+    current_node->visited = true;
+    current_node->h_value = CalculateHValue(current_node);
+    current_node->g_value = current_node->distance(*current_node);
     open_list.push_back(current_node);
     while (open_list.size() > 0)
     {
         current_node = NextNode();
         if(current_node == end_node){
-            ConstructFinalPath(current_node);
+            m_Model.path = ConstructFinalPath(current_node);
             return;
         }
         AddNeighbors(current_node);
